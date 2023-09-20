@@ -92,7 +92,7 @@ const Login = () => {
             <div className='flex flex-col items-center'>
                 <Image width={300} height={300} src='/Kids Studying from Home-pana.svg' alt=''/>
                 <h1 className='font-semibold text-xl mb-2'>Lulus Ujian? Bisa!</h1>
-                <p>Kerjakan semua kuis dan<br/>dapatkan nilai yang bagus!</p>
+                <p>Kerjakan semua kuis dan <br/>dapatkan nilai yang bagus!</p>
             </div>
           </SwiperSlide>
         </Swiper>
