@@ -1,66 +1,92 @@
-import React from 'react'
-import Navbar from '../../components/Navbar';
-import Footer from '../../components/Footer';
-import Image from 'next/image';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 import { PiBookOpenText } from 'react-icons/pi';
+import { AiTwotoneSetting } from 'react-icons/ai';
 import { BiChevronRight } from 'react-icons/bi';
+import { signOut } from 'next-auth/react';
+import LogOutBtn from '@/components/LogOutBtn';
 
-const Profile = () => {
+const ProfilePage = async () => {
+    const session = await getServerSession(authOptions);
+    const user = session?.user.name || session?.user.fullname;
+    const userImage = session?.user?.image ?? '';
+    const userEmail = session?.user?.email;
+    const intToOrdinalNumberString = (num: number): string => {
+        num = Math.round(num);
+        let numString = num.toString();
+    
+        if (Math.floor(num / 10) % 10 === 1) {
+            return numString + "th";
+        }
+        switch (num % 10) {
+            case 1: return numString + "st";
+            case 2: return numString + "nd";
+            case 3: return numString + "rd";
+            default: return numString + "th";
+        }
+    }
   return (
-    <main className='w-screen h-screen'>
-        <Navbar/>
-        <div className='flex justify-center mt-6 mb-[253px]'>
-            <div className='flex flex-col border rounded-lg bg-gradient-to-tl from-[#7c32a1] to-purple-500'>
-                <div className='flex flex-col items-center border-b-2 mx-2'>
-                    <div className='px-4 mt-10'>
-                        <Image className='w-[150px] h-[150px] object-cover object-top rounded-full' width={150} height={150} src='/exl-profile.jpg' alt=''/>
+    <div className='flex flex-col items-center lg:flex-row lg:justify-center lg:items-start lg:space-x-4'>
+        <div className='w-[20rem] lg:w-[20rem] border rounded-md mx-2 my-6 bg-[#7c32a1] bg-opacity-75'>
+            <div className=' flex flex-col items-center my-4'>
+                <div className="avatar mb-2">
+                    <div className="w-24 rounded-full">
+                        {userImage? (<img src={userImage} alt="User Image" />) : (<img src={`https://ui-avatars.com/api/?name=${user}&background=0D8ABC&color=fff`} alt="User Image" />) }
                     </div>
-                    <h1 className='font-medium text-2xl px-20 text-white'>Fullname</h1>
-                    <h3 className='px-20 mb-3 text-white'>email@gmail.com</h3>
                 </div>
-                <div className='flex justify-between items-center border rounded-md px-2 py-4 mx-2 my-2 text-white'>
-                    <h1 className='text-lg font-medium ml-2'>Rank</h1>
-                    <h1 className='text-xl font-medium mr-2'>99</h1>
-                </div>
+                <h2 className='font-semibold text-white'>{(user)?.toUpperCase()}</h2>
+                <h3 className='text-white'>{userEmail}</h3>
             </div>
-            <div className='flex flex-col ml-6'>
-                <div>
-                    <h1 className='flex items-center text-2xl gap-x-2 mb-2 text-[#7c32a1] font-semibold'>
-                        <PiBookOpenText/>
-                        Saku Belajar</h1>
-                    <div className='grid grid-cols-3 gap-x-3 mb-2'>
-                        <div className='flex flex-col items-center border py-4 px-20 rounded-md'>
-                            <Image width={70} height={70} src='/IconLeaderBoard.png' alt=''/>
-                            <h1>Leader Board</h1>
-                        </div>
-                        <div className='border flex flex-col items-center py-4 px-20 rounded-md'>
-                            <Image width={70} height={70} src='/IconBookMark.png' alt=''/>
-                            <h1>Bookmark</h1>
-                        </div>
-                        <div className='border flex flex-col items-center py-4 px-20 rounded-md'>
-                            <Image width={70} height={70} src='/IconQuizzPassed.png' alt=''/>
-                            <h1>Quiz Passed</h1>
-                        </div>
-                    </div>
+            <div className='divider'></div>
+            <div className='flex flex-col '>
+                <div className='flex items-center mb-3 justify-between h-20 border rounded-lg border-slate-300 bg-[#7c32a1] bg-opacity-70 mx-2'>
+                    <h1 className='text-xl text-white font-medium mx-4'>Rank</h1>
+                    <p className='text-lg text-white mx-4'>{intToOrdinalNumberString(1)}</p>
                 </div>
-                <div className='flex flex-col items-start'>
-                    <h1 className='flex items-center text-2xl gap-x-2 mb-2 text-[#7c32a1] font-semibold'>
-                        <PiBookOpenText/>
-                        Saku Belajar</h1>
-                    <div className='w-full flex items-center justify-between p-2 mb-2'>
-                        <h1 className='text-xl'>Ubah Profil</h1>
-                        <span className='text-2xl'><BiChevronRight/></span>
-                    </div>
-                    <div className='w-full flex items-center justify-between p-2 mb-2'>
-                        <h1 className='text-xl'>Keluar</h1>
-                        <span className='text-2xl'><BiChevronRight/></span>
-                    </div>
+                <div className='flex items-center mb-3 justify-between h-20 border rounded-lg border-slate-300 bg-[#7c32a1] bg-opacity-70 mx-2'>
+                    <h1 className='text-xl text-white font-medium mx-4'>Total Score</h1>
+                    <p className='text-lg text-white mx-4'>1200pts</p> 
                 </div>
             </div>
         </div>
-        <Footer/>
-    </main>
+        <div className='flex flex-col w-[24rem] lg:w-[28rem] mx-2 my-6  bg-opacity-75'>
+            <div className='mb-4'>
+                <span className='flex items-center space-x-2 text-xl my-2 px-2 text-[#7c32a1]'>
+                    <PiBookOpenText/>
+                    <p>Saku Belajar</p>
+                </span>
+                <div className='grid grid-cols-2 lg:grid-cols-3 gap-2 mx-1 lg:cursor-pointer'>
+                    <button className='flex flex-col justify-center items-center border-2 py-4 rounded-lg gap-y-3'>
+                        <img alt='' src='/IconLeaderBoard.png' />
+                        <p>Leaderboard</p>
+                    </button>
+                    <button className='flex flex-col justify-center items-center border-2 py-4 rounded-lg gap-y-3'>
+                        <img alt='' src='/IconLeaderBoard.png' />
+                        <p>Leaderboard</p>
+                    </button>
+                    <button className='flex flex-col justify-center items-center border-2 py-4 rounded-lg gap-y-3'>
+                        <img alt='' src='/IconLeaderBoard.png' />
+                        <p>Leaderboard</p>
+                    </button>
+                </div>
+            </div>
+            <div>
+                <span className='flex items-center space-x-2 text-xl my-2 px-2 text-[#7c32a1]'>
+                    <AiTwotoneSetting/>
+                    <p>Pengaturan Akun</p>
+                </span>
+                <div className='grid grid-cols-1 gap-2 ml-8 lg:cursor-pointer'>
+                    <div className='w-full flex items-center justify-between'>
+                        <p>Edit Profil</p>
+                        <BiChevronRight/>
+                    </div>
+                    <LogOutBtn/>
+                </div>
+            </div>
+        </div>
+    </div>
   )
 }
 
-export default Profile
+export default ProfilePage
+//https://img.freepik.com/free-vector/hand-drawn-teacher-s-day-background-spanish_23-2149354765.jpg

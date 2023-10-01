@@ -1,90 +1,115 @@
-'use client'
-import Image from 'next/image'
-// import dynamic from 'next/dynamic'
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import Navbar from "@/components/Navbar/Navbar";
+import Footer from "@/components/Footer/Footer";
+import Image from "next/image";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import SliderCard from "@/components/SliderCard";
 
-// const Navbar = dynamic(() => import('../components/Navbar'), { ssr: false })
-// const Footer = dynamic(() => import('../components/Footer'), { ssr: false })
-
-
-
-export default function Home() {
+const Home = async () => {
+  const session = await getServerSession(authOptions);
+  console.log(session)
   return (
-    <main className='w-screen h-screen'>
-      {/** Header or Banner Section */}
+    <div>
       <Navbar/>
-      <div className='bg-[#AF76AA] h-auto mb-6'>
-        <div className='flex justify-center gap-x-44'>
-          <div className='flex flex-col items-start my-16'>
-            <h1 className='text-4xl font-semibold text-white mt-6'>#BelajarEverywhere untuk <br/> Jadi Apapun yang<br/> Kamu Mau!</h1>
-            <p className='text-white text-xl mt-4 mb-12'>Learnify gak hanya ngasih materi pelajaran,<br/> tapi juga fokus di bikin otak makin pinter<br/> dalam berpikir</p>
-            <button className='text-[#7C32A1] font-medium px-6 py-2 rounded-xl bg-[#FCC659]'>Yuk, Ikutan!</button>
+      {/** Hero */}
+      <div className="bg-[#AF76AA]">
+        <div className="mx-2 px-4 py-4 text-white lg:flex lg:justify-center lg:items-center lg:space-x-12 lg:py-8">
+          <div className="lg:w-[50%]">
+            <h1 className="text-xl lg:text-4xl font-bold mb-2 lg:mb-4">#BikinBelajarMuEverywhere untuk Jadi Apapun yang Kamu Mau!</h1>
+            <p className="mb-4 lg:text-lg">Learnify gak hanya ngasih materi pelajaran, tapi juga fokus di bikin otak makin pinter dalam berpikir.</p>
+            <button className="btn btn-warning btn-sm text-xs">Yuk, Ikutan</button>
           </div>
-          <div className='my-20'>
-            <Image width={400} height={400} src='/Kids Studying from Home-amico.svg' alt='study.png'/>
-          </div>
-        </div>
-      </div>
-      {/** Why us */}
-      <div className='h-auto mb-6'>
-        <div className='flex justify-center gap-x-44'>
-          <div className='flex flex-col items-start my-16'>
-            <h1 className='text-4xl font-semibold text-[#7B1FA1] mt-6'>Makin Jago Bernalar dan Lolos di Semua<br/> Latihan dan Ujian di Sekolah Bareng Learnify!</h1>
-            <div className='flex flex-col items-start mt-2'>
-              <div className='flex items-center my-6'>
-                <Image width={90} height={10} src='/medal.png' alt='medal.png'/>
-                <div className='ml-4'>
-                  <h1 className='font-semibold text-xl mb-1 text-[#B789D2]'>Raih banyak juara kelas bareng Learnify!</h1>
-                  <p>Bayangin kamu jadi atlet, untuk sehat mungkin bisa usaha sendiri.<br/>Tapi untuk menang kompetisi, atlet pasti pakai pelatih siapin<br/> segudang program latihan supaya kamu jadi juara.</p>
-                </div>
-              </div>
-              <div className='flex items-center my-6'>
-                <Image width={90} height={10} src='/brain.png' alt='brain.png'/>
-                <div className='ml-4'>
-                  <h1 className='font-semibold text-xl mb-1 text-[#B789D2]'>Raih banyak juara kelas bareng Learnify!</h1>
-                  <p>Bayangin kamu jadi atlet, untuk sehat mungkin bisa usaha sendiri.<br/>Tapi untuk menang kompetisi, atlet pasti pakai pelatih siapin<br/> segudang program latihan supaya kamu jadi juara.</p>
-                </div>
-              </div>
-              <div className='flex items-center my-6'>
-                <Image width={90} height={10} src='/list.png' alt='list.png'/>
-                <div className='ml-4'>
-                  <h1 className='font-semibold text-xl mb-1 text-[#B789D2]'>Raih banyak juara kelas bareng Learnify!</h1>
-                  <p>Bayangin kamu jadi atlet, untuk sehat mungkin bisa usaha sendiri.<br/>Tapi untuk menang kompetisi, atlet pasti pakai pelatih siapin<br/> segudang program latihan supaya kamu jadi juara.</p>
-                </div>
-              </div>
-            </div>
-            
-          </div>
-          <div className='my-20'>
-            <Image width={600} height={500} src='/Learning-amico.svg' alt='study.png'/>
-            <a href="https://storyset.com/people" className=' font-thin opacity-15'>People illustrations by Storyset</a>
+          <div className="flex justify-center my-4 lg:block lg:px-4">
+            <Image src='/Kids Studying from Home-amico.svg' alt='' className="lg:w-96" width={400} height={100} />
           </div>
         </div>
       </div>
-      {/** What you get */}
-      <div className='bg-[#AF76AA] h-auto mb-6'>
-        <div className='flex justify-center mx-60'>
-        <div className='grid grid-cols-2'>
-          <div className='col-span-2 text-white font-semibold text-2xl mt-4'>Dapet Apa Aja di Learnify??</div>
-          <div className='flex items-center my-6 px-4 mr-2 rounded-2xl bg-gradient-to-tl from-[#4B83E0] to-[#77a3efa4]'>
-            <div className='px-4'>
-              <h1 className='text-[#FFC007] text-lg font-bold'>Materi Lengkap</h1>
-              <p>siap nemenin kamu belajar dengan materi yang lengkap dimana saja dan kapan saja.</p>
+
+      {/** List */}
+      <div className="m-2 p-4 lg:px-2 lg:py-8 lg:mx-6 lg:my-8 lg:flex lg:justify-center lg:items-center space-x-11">
+        <ul className="lg:w-[40%]">
+        <h1 className="mb-2 font-bold text-lg lg:text-2xl text-[#7B1FA1]">Makin Jago Bernalar dan Lolos di Semua Latihan dan Ujian di Sekolah Bareng Learnify!</h1>
+          <li>
+            <div className="flex space-x-2 items-start h-auto my-2 py-2">
+              <Image src="/medal.png" 
+              alt=""
+              width={100}
+              height={100}
+              className="w-[20%] lg:w-20 h-auto"
+              />
+              <div className="flex flex-col lg:pl-3">
+                <h1 className="mr-2 lg:font-semibold lg:text-lg sm:font-semibold sm:text-base">Raih banyak juara kelas bareng Learnify!</h1>
+                <p className="hidden lg:inline sm:inline lg:text-sm sm:text-sm">Bayangin kamu jadi atlet, untuk sehat mungkin bisa usaha sendiri. Tapi untuk menang kompetisi, atlet pasti pakai pelatih siapin segudang program latihan supaya kamu jadi juara.</p>
+              </div>
             </div>
-            <Image width={300} height={300} src='/Kids Studying from Home-bro.svg' alt='materi.png'/>
-          </div>
-          <div className='flex items-center my-6 px-4 ml-2 rounded-2xl bg-gradient-to-tl from-[#E5437D] to-[#fc95bb9c]'>
-            <div className='px-2'>
-              <h1 className='text-[#FFC007] text-lg font-bold'>Kuis Setiap Saat</h1>
-              <p>mengerjakan kuis setiap materi pembelajaran secara rutin supaya gak kaget waktu ujian.</p>
+          </li>
+          <li>
+          <div className="flex space-x-2 items-start h-auto my-2 py-2">
+              <Image src="/brain.png" 
+              alt=""
+              width={100}
+              height={100}
+              className="w-[20%] lg:w-20 h-auto"
+              />
+              <div className="flex flex-col lg:pl-3">
+                <h1 className="mr-2 lg:font-semibold lg:text-lg sm:font-semibold sm:text-base">Berlatih bernalar bareng materi Learnify</h1>
+                <p className="hidden lg:inline sm:inline lg:text-sm sm:text-sm">Bayangin kamu jadi atlet, untuk sehat mungkin bisa usaha sendiri. Tapi untuk menang kompetisi, atlet pasti pakai pelatih siapin segudang program latihan supaya kamu jadi juara.</p>
+              </div>
             </div>
-            <Image width={300} height={300} src='/Taking notes-bro.svg' alt='materi.png'/>
-          </div>
-        </div>
-        </div>
+          </li>
+          <li>
+          <div className="flex space-x-2 items-start h-auto my-2 py-2">
+              <Image src="/list.png" 
+              alt=""
+              width={100}
+              height={100}
+              className="w-[20%] lg:w-20 h-auto"
+              />
+              <div className="flex flex-col lg:pl-3">
+                <h1 className="mr-2 lg:font-semibold lg:text-lg sm:font-semibold sm:text-base">Kamu dapat mengerjakan dimanasaja</h1>
+                <p className="hidden lg:inline sm:inline lg:text-sm sm:text-sm">Bayangin kamu jadi atlet, untuk sehat mungkin bisa usaha sendiri. Tapi untuk menang kompetisi, atlet pasti pakai pelatih siapin segudang program latihan supaya kamu jadi juara.</p>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <Image src="/Learning-amico.svg" alt="" width={100} height={100} className="hidden lg:block lg:w-[30rem]"/>
       </div>
+      
+      <div className="bg-[#AF76AA] py-6 lg:flex lg:flex-col lg:items-center">
+        <h1 className="mb-2 mx-3 text-white text-lg font-bold lg:text-2xl lg:mb-6 sm:text-xl sm:mb-4">Dapet apa aja di Learnify?</h1>
+        <div className="lg:flex lg:gap-x-6 lg:mx-4 hidden">
+          <div className="card card-side bg-base-100 bg-gradient-to-tl from-[#77a3efa4] to-[#4B83E0] shadow-xl">
+            <div className="card-body">
+              <h2 className="card-title text-warning text-2xl">Materi Lengkap</h2>
+              <p className="text-lg w-52 text-white">siap nemenin belajar konsep kapan aja, di mana aja.</p>
+            </div>
+            <figure><img src="/Kids Studying from Home-bro.svg" alt=""/></figure>
+          </div>
+
+          <div className="card card-side bg-base-100 shadow-xl bg-gradient-to-tl from-[#fc95bb9c] to-[#E5437D]">
+            <div className="card-body">
+              <h2 className="card-title text-warning text-2xl">Kerjakan Kuis</h2>
+              <p className="text-lg w-52 text-white">mengerjakan kuis setiap materi secara rutin.</p>
+            </div>
+            <figure><img src="/Taking notes-bro.svg" alt=""/></figure>
+          </div>
+        </div>
+        <SliderCard style="lg:hidden"/>
+      </div>
+
+
       <Footer/>
-    </main>
+    </div>
   )
 }
+
+export default Home
+
+      // <div className="w-64 carousel rounded-box">
+      //   <div className="carousel-item w-full">
+      //     <img src="https://daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.jpg" className="w-full" alt="Tailwind CSS Carousel component" />
+      //   </div>
+      //   <div className="carousel-item w-full">
+      //     <img src="https://daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.jpg" className="w-full" alt="Tailwind CSS Carousel component" />
+      //   </div>
+      // </div>
