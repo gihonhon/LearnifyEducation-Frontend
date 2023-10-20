@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
-import { NextResponse } from "next/server";
 import type { Subject } from "@prisma/client";
+import { NextResponse } from "next/server";
 
 // Get All List Subject
 export const GET = async (req: Request) => {

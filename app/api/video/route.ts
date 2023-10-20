@@ -1,7 +1,6 @@
 import prisma from "@/lib/prisma";
-import { NextResponse } from "next/server";
 import { Video } from "@prisma/client";
-import uploadToSupabaseStorage from "@/lib/uploadToSupabaseStorage";
+import { NextResponse } from "next/server";
 
 // Create Video by Id Materi
 export const POST = async (req: Request) => {

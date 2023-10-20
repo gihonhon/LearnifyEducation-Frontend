@@ -1,9 +1,8 @@
 import prisma from "@/lib/prisma";
-import { NextResponse } from "next/server";
 import type { Kelas } from "@prisma/client";
+import { NextResponse } from "next/server";
 
 // Get All List Kelas
-
 export const GET = async (req: Request) => {
   try {
     // const body: Kelas = await req.json();

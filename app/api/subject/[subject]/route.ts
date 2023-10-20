@@ -1,6 +1,5 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import type { Subject } from "@prisma/client";
 
 export const GET = async (
   req: Request,

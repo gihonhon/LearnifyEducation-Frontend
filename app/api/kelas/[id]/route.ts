@@ -1,6 +1,5 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import type { Kelas } from "@prisma/client";
 
 // Get By Id
 export const GET = async (
@@ -23,7 +22,7 @@ export const GET = async (
     }
     return NextResponse.json(kelasById, { status: 200 });
   } catch (error) {
-    return NextResponse.json(error, { status: 505 });
+    return NextResponse.json(error, { status: 500 });
   }
 };
 
@@ -39,5 +38,7 @@ export const DELETE = async (
       },
     });
     return NextResponse.json(delKelas, { status: 200 });
-  } catch (error) {}
+  } catch (error) {
+    return NextResponse.json(error, { status: 500 });
+  }
 };
