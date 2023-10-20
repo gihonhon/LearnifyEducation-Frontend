@@ -1,18 +1,17 @@
-import React from 'react'
-import NavbarLogin from '@/components/Navbar/NavbarLogin'
-import { Toaster } from 'react-hot-toast';
+import NavbarLogin from "@/components/Navbar/NavbarLogin";
+import React from "react";
 
 export const metadata = {
-  title: "Masuk Akun"
-}
+  title: "Masuk Akun",
+};
 
-const MasukLayout = ({children}: {children: React.ReactNode}) => {
+const MasukLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
-        <NavbarLogin/>
-        {children}
+      <NavbarLogin />
+      {children}
     </div>
-  )
-}
+  );
+};
 
-export default MasukLayout
+export default MasukLayout;

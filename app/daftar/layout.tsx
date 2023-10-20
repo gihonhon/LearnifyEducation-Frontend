@@ -1,16 +1,16 @@
-import NavbarLogin from "@/components/Navbar/NavbarLogin"
+import NavbarLogin from "@/components/Navbar/NavbarLogin";
 
 export const metadata = {
-    title: "Daftar Akun"
-}
+  title: "Daftar Akun",
+};
 
-const DaftarLayout = ({children}: {children: React.ReactNode}) => {
+const DaftarLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
-        <NavbarLogin/>
-        {children}
+      <NavbarLogin />
+      {children}
     </div>
-  )
-}
+  );
+};
 
-export default DaftarLayout
+export default DaftarLayout;

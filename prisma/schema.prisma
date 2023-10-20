@@ -10,30 +10,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-// model User {
-//   id      Int      @id  @default(autoincrement())
-//   email   String   @unique
-//   password String
-//   fullname    String
-//   gender String
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-// }
-
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -52,8 +41,8 @@ model User {
   id            String    @id @default(cuid())
   name          String?
   fullname      String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
   password      String?
   email         String?   @unique
   emailVerified DateTime?
@@ -70,4 +59,36 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+model Materi {
+  MateriID     String  @id @default(cuid())
+  Materi_Title String
+  Kelas        Kelas   @relation("KelasToMateri", fields: [KelasID], references: [KelasID])
+  Subject      Subject @relation("SubjectToMateri", fields: [SubjectID], references: [SubjectID])
+  videos       Video[] @relation("MateriToVideo")
+  KelasID      String
+  SubjectID    String
+}
 
+model Video {
+  VideoID     String @id @default(cuid())
+  MateriID    String
+  Url_path    String
+  Title_Video String
+  Short_Desc  String
+  Materi      Materi @relation("MateriToVideo", fields: [MateriID], references: [MateriID])
+}
+
+model Kelas {
+  KelasID  String    @id @default(cuid())
+  Kelas    String
+  materis  Materi[]  @relation("KelasToMateri")
+  subjects Subject[] @relation("SubjectToKelas")
+}
+
+model Subject {
+  SubjectID String   @id @default(cuid())
+  Subject   String
+  KelasID   String
+  kelas     Kelas    @relation("SubjectToKelas", fields: [KelasID], references: [KelasID])
+  materis   Materi[] @relation("SubjectToMateri")
+}
