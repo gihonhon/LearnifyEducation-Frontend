@@ -23,7 +23,7 @@ export const GET = async (
     }
     return NextResponse.json(kelasById, { status: 200 });
   } catch (error) {
-    return NextResponse.json(error, { status: 505 });
+    return NextResponse.json(error, { status: 500 });
   }
 };
 
@@ -39,5 +39,7 @@ export const DELETE = async (
       },
     });
     return NextResponse.json(delKelas, { status: 200 });
-  } catch (error) {}
+  } catch (error) {
+    return NextResponse.json(error, { status: 500 });
+  }
 };
