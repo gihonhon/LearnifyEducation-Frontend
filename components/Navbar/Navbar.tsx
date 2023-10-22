@@ -55,11 +55,7 @@ const Navbar = async () => {
         </div>
         {/** */}
         <div className="lg:form-control hidden">
-          <input
-            type="text"
-            placeholder="Belajar apa hari ini.."
-            className="input input-bordered w-24 md:w-auto"
-          />
+          <SearchBar />
         </div>
         {session?.user ? (
           <UserAccountNav />

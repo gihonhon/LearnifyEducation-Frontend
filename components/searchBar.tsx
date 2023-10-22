@@ -1,20 +1,19 @@
+// Ensure you have "next" and "react" types installed in your project
+// npm install @types/next @types/react
+
 "use client";
 import { useRouter } from "next/navigation";
-import { KeyboardEvent, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useState } from "react";
 
 const SearchBar = () => {
   const router = useRouter();
   const [materi, setMateri] = useState("");
 
   const handleSearch = async () => {
-    // Perform any search-related actions here
-    // For example, you can make an API request using axios
-
-    // After performing the search, navigate to the result page
     router.push(`/search/${materi}`);
   };
 
-  const handleKeyDown = (e: KeyboardEvent) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       handleSearch();
     }
@@ -26,7 +25,7 @@ const SearchBar = () => {
       placeholder="Belajar apa hari ini.."
       className="input input-bordered w-full md:w-auto"
       value={materi}
-      onChange={(e) => setMateri(e.target.value)}
+      onChange={(e: ChangeEvent<HTMLInputElement>) => setMateri(e.target.value)}
       onKeyDown={handleKeyDown}
     />
   );

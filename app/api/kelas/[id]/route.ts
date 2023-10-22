@@ -7,7 +7,7 @@ export const GET = async (
   { params }: { params: { id: string } }
 ) => {
   try {
-    const kelasById = await prisma.kelas.findMany({
+    const kelasById = await prisma.kelas.findUnique({
       where: {
         KelasID: params.id,
       },
