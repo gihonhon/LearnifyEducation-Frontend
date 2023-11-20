@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
@@ -37,6 +38,11 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+enum UserRole {
+  TEACHER
+  STUDENT
+}
+
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -47,6 +53,9 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  role          UserRole  @default(STUDENT)
+  ownCourse     Course[]
+  joinCourse    Assign[]
   accounts      Account[]
   sessions      Session[]
 }
@@ -59,36 +68,168 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Materi {
-  MateriID     String  @id @default(cuid())
-  Materi_Title String
-  Kelas        Kelas   @relation("KelasToMateri", fields: [KelasID], references: [KelasID])
-  Subject      Subject @relation("SubjectToMateri", fields: [SubjectID], references: [SubjectID])
-  videos       Video[] @relation("MateriToVideo")
-  KelasID      String
-  SubjectID    String
-}
+model Course {
+  id          String  @id @default(uuid())
+  userId      String
+  title       String  @db.Text
+  description String? @db.Text
+  imageUrl    String? @db.Text
+  price       Float?
+  isPublished Boolean @default(false)
 
-model Video {
-  VideoID     String @id @default(cuid())
-  MateriID    String
-  Url_path    String
-  Title_Video String
-  Short_Desc  String
-  Materi      Materi @relation("MateriToVideo", fields: [MateriID], references: [MateriID])
-}
+  subjectId String?
+  subjects  Subject? @relation(fields: [subjectId], references: [id])
+  users     User     @relation(fields: [userId], references: [id])
 
-model Kelas {
-  KelasID  String    @id @default(cuid())
-  Kelas    String
-  materis  Materi[]  @relation("KelasToMateri")
-  subjects Subject[] @relation("SubjectToKelas")
+  kelasId String?
+  kelas   Kelas?  @relation(fields: [kelasId], references: [id])
+
+  chapters    Chapter[]
+  attachments Attachment[]
+  assigns     Assign[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([subjectId, userId])
 }
 
 model Subject {
-  SubjectID String   @id @default(cuid())
-  Subject   String
-  KelasID   String
-  kelas     Kelas    @relation("SubjectToKelas", fields: [KelasID], references: [KelasID])
-  materis   Materi[] @relation("SubjectToMateri")
+  id      String   @id @default(uuid())
+  name    String   @unique
+  courses Course[]
 }
+
+model Kelas {
+  id      String   @id @default(uuid())
+  name    String   @unique
+  courses Course[]
+}
+
+model Attachment {
+  id   String @id @default(uuid())
+  name String
+  url  String @db.Text
+
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([courseId])
+}
+
+model Chapter {
+  id          String  @id @default(uuid())
+  title       String
+  description String? @db.Text
+  videoUrl    String? @db.Text
+  position    Int
+  isPublished Boolean @default(false)
+
+  videosData VideoData?
+
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  userProgress UserProgress[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([courseId])
+}
+
+model VideoData {
+  id         String @id @default(uuid())
+  videoTitle String
+
+  chapterId String  @unique
+  chapter   Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+}
+
+model UserProgress {
+  id     String @id @default(uuid())
+  userId String
+
+  chapterId String
+  chapter   Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+
+  isCompleted Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, chapterId])
+  @@index([chapterId])
+}
+
+model Assign {
+  id     String @id @default(uuid())
+  userId String
+  users  User   @relation(fields: [userId], references: [id])
+
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+
+  @@unique([userId, courseId])
+  @@index([courseId, userId])
+}
+
+model Article {
+  id        String  @id @default(uuid())
+  title     String  @db.Text
+  text      String  @db.Text
+  thumbnail String? @db.Text
+
+  categoryId String?
+  category   Category? @relation(fields: [categoryId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([categoryId])
+}
+
+model Category {
+  id       String    @id @default(uuid())
+  name     String    @unique
+  articles Article[]
+}
+
+// model StripeCustomer {
+//   id               String @id @default(uuid())
+//   userId           String @unique
+//   stripeCustomerId String @unique
+
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+// }
+
+// model Video {
+//   VideoID     String @id @default(cuid())
+//   MateriID    String
+//   Url_path    String
+//   Title_Video String
+//   Short_Desc  String
+//   Materi      Materi @relation("MateriToVideo", fields: [MateriID], references: [MateriID])
+// }
+
+// model Kelas {
+//   KelasID  String    @id @default(cuid())
+//   Kelas    String
+//   materis  Materi[]  @relation("KelasToMateri")
+//   subjects Subject[] @relation("SubjectToKelas")
+// }
+
+// model Subject {
+//   SubjectID String   @id @default(cuid())
+//   Subject   String
+//   KelasID   String
+//   kelas     Kelas    @relation("SubjectToKelas", fields: [KelasID], references: [KelasID])
+//   materis   Materi[] @relation("SubjectToMateri")
+// }

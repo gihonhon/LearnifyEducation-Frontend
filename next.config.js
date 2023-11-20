@@ -1,9 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    reactStrictMode: true,
-    experimental: {
-        serverComponentsExternalPackages: ['bcrypt'],
-      },
-}
+  images: {
+    domains: ["utfs.io", "lh3.googleusercontent.com", "img.freepik.com"],
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
