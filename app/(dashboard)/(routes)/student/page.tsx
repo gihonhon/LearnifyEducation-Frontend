@@ -12,8 +12,10 @@ export default async function Dashboard() {
     return redirect("/");
   }
 
+  const userId: string = session.user.id;
+
   const { completedCourses, coursesInProgress } = await getDashboardCourses(
-    session.user.id
+    userId
   );
 
   return (
