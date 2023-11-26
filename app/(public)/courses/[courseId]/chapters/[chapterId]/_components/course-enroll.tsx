@@ -5,6 +5,7 @@ import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
 import axios from "axios";
 import { getServerSession } from "next-auth";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -18,13 +19,15 @@ export const CourseEnrollButton = ({
   userId,
 }: CourseEnrollButtonProps) => {
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
   const onClick = async () => {
     try {
       setIsLoading(true);
 
       await axios.post(`/api/courses/${courseId}/assigns/${userId}
       `);
-      toast.success("Success Assign ");
+      toast.success("Success");
+      router.refresh();
     } catch (error) {
       toast.error("Something went wrong");
     } finally {

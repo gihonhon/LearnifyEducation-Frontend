@@ -3,30 +3,28 @@
 import { cn } from "@/lib/utils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import qs from "query-string";
-import { IconType } from "react-icons";
 
-interface SubjectItemProps {
+interface KelasItemProps {
   label: string;
   value?: string;
-  icon?: IconType;
 }
 
-export const SubjectItem = ({ label, value, icon: Icon }: SubjectItemProps) => {
+export const KelasItem = ({ label, value }: KelasItemProps) => {
   const pathName = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentSubjectId = searchParams.get("subjectId");
   const currentKelasId = searchParams.get("kelasId");
   const currentTitle = searchParams.get("title");
-  const isSelected = currentSubjectId === value;
+  const isSelected = currentKelasId === value;
   const onClick = () => {
     const url = qs.stringifyUrl(
       {
         url: pathName,
         query: {
           title: currentTitle,
-          subjectId: isSelected ? null : value,
-          kelasId: isSelected ? null : currentKelasId,
+          subjectId: isSelected ? null : currentSubjectId,
+          kelasId: isSelected ? null : value,
         },
       },
       { skipNull: true, skipEmptyString: true }
@@ -43,7 +41,6 @@ export const SubjectItem = ({ label, value, icon: Icon }: SubjectItemProps) => {
       )}
       type="button"
     >
-      {Icon && <Icon size={20} />}
       <div className="truncate">{label}</div>
     </button>
   );

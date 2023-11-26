@@ -1,4 +1,4 @@
-import { Course, Kelas, Subject } from "@prisma/client";
+import { Course, Kelas, Subject, User } from "@prisma/client";
 
 import { getProgress } from "./get-progress";
 
@@ -7,6 +7,7 @@ import { db } from "@/lib/db";
 type CourseWithProgressWithSubject = Course & {
   subjects: Subject | null;
   kelas: Kelas | null;
+  users: User | null;
   chapters: {
     id: string;
   }[];
@@ -53,6 +54,7 @@ export const getCourses = async ({
             userId,
           },
         },
+        users: true,
       },
       orderBy: {
         createdAt: "desc",

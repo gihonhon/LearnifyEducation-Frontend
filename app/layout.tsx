@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ToastProvider } from "@/components/providers/toast-provider";
 import ProviderNext from "@/components/providers/next-provider";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +25,10 @@ export default function RootLayout({
       <body className={inter.className}>
         <ConfettiProvider />
         <ToastProvider />
-        <ProviderNext>{children}</ProviderNext>
+        <ProviderNext>
+          {children}
+          <Analytics />
+        </ProviderNext>
       </body>
     </html>
   );

@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { Subject, Chapter, Course, Kelas } from "@prisma/client";
+import { Subject, Chapter, Course, Kelas, User } from "@prisma/client";
 import { getProgress } from "./get-progress";
 
 type CourseWithProgressWithCategory = Course & {
@@ -7,6 +7,7 @@ type CourseWithProgressWithCategory = Course & {
   chapters: Chapter[];
   progress: number | null;
   kelas: Kelas | null;
+  users: User | null;
 };
 
 type DashboardCourses = {
@@ -32,6 +33,7 @@ export const getDashboardCourses = async (
               },
             },
             kelas: true,
+            users: true,
           },
         },
       },

@@ -45,14 +45,14 @@ export async function DELETE(
 
     const url = chapter.videoUrl;
     const fileName = extractFileNameFromUrl(url!);
-    // TODO : Add Check for existing video url and rewrite video url
+    // Check for existing video url and rewrite video url
     if (chapter.videoUrl) {
       const existingMuxData = await db.videoData.findFirst({
         where: {
           chapterId: params.chapterId,
         },
       });
-      // TODO : Delete from bucket or upload thing
+      // Delete from bucket or upload thing
       if (existingMuxData) {
         await utapi.deleteFiles(fileName!);
         await db.videoData.delete({
@@ -128,8 +128,8 @@ export async function PATCH(
       },
     });
 
-    //TODO : Handle Video Upload
-    //TODO : Rewrite video in database
+    //Handle Video Upload
+    //Rewrite video in database
     if (values.videoUrl) {
       const existingVideoData = await db.videoData.findFirst({
         where: {
@@ -144,7 +144,7 @@ export async function PATCH(
 
       const url: string = values.videoUrl;
       const fileName = extractFileNameFromUrl(url);
-      //TODO : Change to bucket or upload thing
+      //Change to bucket or upload thing
       if (existingVideoData) {
         await db.videoData.delete({
           where: {
@@ -158,7 +158,7 @@ export async function PATCH(
       //   test: false,
       // });
 
-      // TODO : add to table videoData
+      // add to table videoData
       await db.videoData.create({
         data: {
           chapterId: params.chapterId,

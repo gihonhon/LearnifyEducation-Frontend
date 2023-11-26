@@ -21,10 +21,10 @@ export const SearchInput = () => {
 
   return (
     <div className="relative">
-      <Search className="h-4 w-4 absolute top-3 left-3 text-slate-600" />
+      <Search className="h-4 w-4 absolute top-3 left-3 text-purple-600" />
       <Input
         type="search"
-        className="w-full md:w-[300px] pl-9 rounded-xl bg-slate-100 focus-visible:ring-slate-200"
+        className="w-full lg:w-[500px] md:w-[300px] pl-9 border-2 border-purple-100 rounded-xl bg-purple-50 focus-visible:ring-purple-200"
         placeholder="Search for course..."
         value={course}
         onChange={(e: ChangeEvent<HTMLInputElement>) =>

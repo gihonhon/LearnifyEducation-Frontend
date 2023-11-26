@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { IconBadge } from "./icon-badge";
+import { IconBadge } from "@/components/icon-badge";
 import { BookOpen, Dot } from "lucide-react";
-import { CourseProgress } from "./course-progress";
-import { Separator } from "./ui/separator";
+
+import { Separator } from "@/components/ui/separator";
 
 interface CourseCardProps {
   id: string;
@@ -13,7 +13,6 @@ interface CourseCardProps {
   progress: number | null;
   subject: string;
   kelas: string;
-  owner: string;
 }
 
 export const CourseCard = ({
@@ -24,7 +23,6 @@ export const CourseCard = ({
   progress,
   subject,
   kelas,
-  owner,
 }: CourseCardProps) => {
   return (
     <Link href={`/courses/${id}`}>
@@ -36,7 +34,7 @@ export const CourseCard = ({
           <div className="text-lg md:text-base font-medium group-hover:text-sky-700 transition line-clamp-2">
             {title}
           </div>
-          <p className="text-xs text-muted-foreground">by {owner}</p>
+
           <div className="flex items-center space-x-1">
             <p className="text-xs text-muted-foreground">{subject}</p>
             <Dot />
@@ -49,19 +47,6 @@ export const CourseCard = ({
               <span>{chaptersLength} Bab</span>
             </div>
           </div>
-          {progress !== null ? (
-            <div>
-              <CourseProgress
-                size="sm"
-                value={progress}
-                variant={progress === 100 ? "success" : "default"}
-              />
-            </div>
-          ) : (
-            <p className="text-md md:text-sm font-medium text-slate-700">
-              Kamu belum assign kursus ini
-            </p>
-          )}
         </div>
       </div>
     </Link>

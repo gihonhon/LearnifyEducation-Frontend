@@ -6,11 +6,13 @@ import { redirect } from "next/navigation";
 import { Subjects } from "./_components/subjects";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { KelasFil } from "./_components/kelas";
 
 interface SearchPageProps {
   searchParams: {
     title: string;
-    categoryId: string;
+    subjectId: string;
+    kelasId: string;
   };
 }
 
@@ -20,6 +22,11 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
     return redirect("/");
   }
   const subjects = await db.subject.findMany({
+    orderBy: {
+      name: "asc",
+    },
+  });
+  const kelas = await db.kelas.findMany({
     orderBy: {
       name: "asc",
     },
@@ -34,6 +41,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
         <SearchInput />
       </div>
       <div className="p-6 space-y-4">
+        <KelasFil items={kelas} />
         <Subjects items={subjects} />
         <CoursesList items={courses} />
       </div>

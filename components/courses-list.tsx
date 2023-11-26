@@ -1,4 +1,4 @@
-import { Course, Kelas, Subject } from "@prisma/client";
+import { Course, Kelas, Subject, User } from "@prisma/client";
 import { CourseCard } from "./course-card";
 
 type CourseWithCategory = Course & {
@@ -6,6 +6,7 @@ type CourseWithCategory = Course & {
   chapters: { id: string }[];
   progress: number | null;
   kelas: Kelas | null;
+  users: User | null;
 };
 
 interface CoursesListProps {
@@ -26,6 +27,7 @@ export const CoursesList = ({ items }: CoursesListProps) => {
             progress={item.progress}
             subject={item.subjects?.name!}
             kelas={item.kelas?.name!}
+            owner={item.users?.name!}
           />
         ))}
       </div>

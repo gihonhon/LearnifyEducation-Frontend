@@ -2,12 +2,11 @@ import { getServerSession } from "next-auth";
 import Slider from "../_components/slider";
 import DaftarForm from "./daftarForm";
 import { redirect } from "next/navigation";
-// import DaftarForm from "./daftarForm";
 
 const Daftar = async () => {
   const session = await getServerSession();
   if (session?.user) {
-    redirect("/");
+    return redirect("/");
   }
   return (
     <div className="flex lg:h-screen w-full">

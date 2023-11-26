@@ -59,12 +59,6 @@ export async function DELETE(
     if (!course) {
       return new NextResponse("Not found", { status: 404 });
     }
-    // TODO : Add Logic for delete all video in chapters
-    //   for (const chapter of course.chapters) {
-    //     if (chapter.videosData?.assetId) {
-    //       await Video.Assets.del(chapter.muxData.assetId);
-    //     }
-    //   }
 
     const deletedCourse = await db.course.delete({
       where: {

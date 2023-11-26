@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import {
   CircleDollarSign,
   File,
+  FileQuestion,
   LayoutDashboard,
   ListChecks,
 } from "lucide-react";
@@ -18,6 +19,7 @@ import { TitleForm } from "./_components/title-form";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { KelasForm } from "./_components/kelas-form";
+import { QuizsForm } from "./_components/quiz-form";
 
 const CourseId = async ({ params }: { params: { courseId: string } }) => {
   const session = await getServerSession(authOptions);
@@ -120,6 +122,13 @@ const CourseId = async ({ params }: { params: { courseId: string } }) => {
                 <h2 className="text-2xl">Bab kursus</h2>
               </div>
               <ChaptersForm initialData={course} courseId={course.id} />
+            </div>
+            <div>
+              <div className="flex items-center gap-x-2">
+                <IconBadge icon={FileQuestion} />
+                <h2 className="text-2xl">Kuis</h2>
+              </div>
+              <QuizsForm initialData={course} courseId={course.id} />
             </div>
           </div>
           <div>

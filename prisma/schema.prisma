@@ -58,6 +58,7 @@ model User {
   joinCourse    Assign[]
   accounts      Account[]
   sessions      Session[]
+  results       Result[]
 }
 
 model VerificationToken {
@@ -66,6 +67,41 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Quiz {
+  id          String     @id @default(uuid())
+  title       String
+  description String
+  questions   Question[] @relation("QuestionInQuiz")
+  courseId    String
+  course      Course     @relation(fields: [courseId], references: [id])
+  results     Result[]
+}
+
+model Question {
+  id      String   @id @default(uuid())
+  content String
+  options Option[]
+  quiz    Quiz     @relation("QuestionInQuiz", fields: [quizId], references: [id])
+  quizId  String
+}
+
+model Option {
+  id         String   @id @default(uuid())
+  content    String
+  isCorrect  Boolean
+  question   Question @relation(fields: [questionId], references: [id])
+  questionId String
+}
+
+model Result {
+  id     String @id @default(uuid())
+  score  Int
+  quiz   Quiz   @relation(fields: [quizId], references: [id])
+  quizId String
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
 }
 
 model Course {
@@ -80,10 +116,10 @@ model Course {
   subjectId String?
   subjects  Subject? @relation(fields: [subjectId], references: [id])
   users     User     @relation(fields: [userId], references: [id])
+  kelasId   String?
+  kelas     Kelas?   @relation(fields: [kelasId], references: [id])
 
-  kelasId String?
-  kelas   Kelas?  @relation(fields: [kelasId], references: [id])
-
+  quizzes     Quiz[]
   chapters    Chapter[]
   attachments Attachment[]
   assigns     Assign[]

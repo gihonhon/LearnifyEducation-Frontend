@@ -9,7 +9,7 @@ export async function POST(
 ) {
   try {
     const session = await getServerSession(authOptions);
-    const values = await req.json();
+
     if (!session) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
@@ -18,7 +18,6 @@ export async function POST(
       data: {
         userId: params.userId,
         courseId: params.courseId,
-        ...values,
       },
     });
 

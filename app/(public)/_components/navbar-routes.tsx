@@ -35,7 +35,8 @@ import { cn } from "@/lib/utils";
 const NavbarRoutes = () => {
   const { data: session } = useSession();
   const pathname = usePathname();
-  const isCourseStudent = pathname?.includes("/teacher");
+  const isCourseTeacher = pathname?.includes("/teacher");
+  const isCourseStudent = pathname?.includes("/courses");
   const router = useRouter();
   function convertToInitials(fullName: string | undefined): string {
     if (!fullName) {
@@ -65,95 +66,8 @@ const NavbarRoutes = () => {
       <div className={cn(isCourseStudent ? "hidden" : "px-auto mr-3")}>
         <Image src="/finalLogo.png" width={140} height={140} alt="logo" />
       </div>
-      <div className={cn(isCourseStudent ? "hidden" : "mx-2 hidden md:inline")}>
-        <NavigationMenu>
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Kelas Belajar</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                {/* <NavigationMenuLink>Hello</NavigationMenuLink> */}
-                <Accordion
-                  type="single"
-                  collapsible
-                  className="grid grid-cols-1 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-1"
-                >
-                  <AccordionItem value="item-1" className="border-b-0">
-                    <AccordionTrigger className="hover:no-underline hover:text-[#7c32a1] hover:font-semibold">
-                      SMA
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <div className="flex flex-col gap-y-2">
-                        <a className="hover:text-[#7c32a1]" href="">
-                          Kelas XII
-                        </a>
-                        <a className="hover:text-[#7c32a1]" href="">
-                          Kelas XI
-                        </a>
-                        <a className="hover:text-[#7c32a1]" href="">
-                          Kelas X
-                        </a>
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem value="item-2" className="border-b-0">
-                    <AccordionTrigger className="hover:no-underline hover:text-[#7c32a1] hover:font-semibold">
-                      SMP
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <div className="flex flex-col gap-y-2">
-                        <a className="hover:text-[#7c32a1]" href="">
-                          Kelas IX
-                        </a>
-                        <a className="hover:text-[#7c32a1]" href="">
-                          Kelas VIII
-                        </a>
-                        <a className="hover:text-[#7c32a1]" href="">
-                          Kelas VII
-                        </a>
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem value="item-3" className="border-b-0">
-                    <AccordionTrigger className="hover:no-underline hover:text-[#7c32a1] hover:font-semibold">
-                      SD
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <div className="flex flex-col gap-y-2">
-                        <a className="hover:text-[#7c32a1]" href="">
-                          Kelas VI
-                        </a>
-                        <a className="hover:text-[#7c32a1]" href="">
-                          Kelas V
-                        </a>
-                        <a className="hover:text-[#7c32a1]" href="">
-                          Kelas IV
-                        </a>
-                        <a className="hover:text-[#7c32a1]" href="">
-                          Kelas III
-                        </a>
-                        <a className="hover:text-[#7c32a1]" href="">
-                          Kelas II
-                        </a>
-                        <a className="hover:text-[#7c32a1]" href="">
-                          Kelas I
-                        </a>
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <Link href="/blog" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Blog
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
-      </div>
-      <div className="hidden ml-auto md:block">
+
+      <div className="hidden md:block">
         <SearchInput />
       </div>
       <div className="md:flex gap-x-2 ml-2 hidden">

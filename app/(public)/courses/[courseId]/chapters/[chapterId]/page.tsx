@@ -46,7 +46,7 @@ const ChapterIdPage = async ({
       {userProgress?.isCompleted && (
         <Banner variant="success" label="You already completed this chapter" />
       )}
-      {isLocked && (
+      {!assigned && (
         <Banner
           variant="warning"
           label="You need purchase this course to watch this chapter"

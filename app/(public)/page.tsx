@@ -1,15 +1,9 @@
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-import { redirect } from "next/navigation";
 import Link from "next/link";
-import SliderCard from "../../components/slide-card";
+import SliderCard from "@/components/slide-card";
 import Footer from "@/components/footer";
 
-const Home = async () => {
-  const session = await getServerSession(authOptions);
-
+const Home = () => {
   return (
     <div>
       <div className="bg-[#AF76AA]">
@@ -22,16 +16,17 @@ const Home = async () => {
               Learnify gak hanya ngasih materi pelajaran, tapi juga fokus di
               bikin otak makin pinter dalam berpikir.
             </p>
-            {session ? (
-              <></>
-            ) : (
-              <Link
-                className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 bg-[#ffc007] text-[#7c32a1] hover:bg-[#ffc007]/60"
-                href="/daftar"
-              >
-                Yuk, Ikutan
-              </Link>
-            )}
+            <p className="mb-4 lg:text-lg">
+              Learnify gak hanya ngasih materi pelajaran, tapi juga fokus di
+              bikin otak makin pinter dalam berpikir.
+            </p>
+
+            <Link
+              className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 bg-[#ffc007] text-[#7c32a1] hover:bg-[#ffc007]/60"
+              href="/"
+            >
+              Yuk, Ikutan
+            </Link>
           </div>
           <div className="flex justify-center my-4 lg:block lg:px-4">
             <Image
@@ -106,7 +101,7 @@ const Home = async () => {
               />
               <div className="flex flex-col lg:pl-3">
                 <h1 className="mr-2 lg:font-semibold lg:text-lg sm:font-semibold sm:text-base">
-                  Kamu dapat mengerjakan dimanasaja
+                  Kamu dapat mengerjakan dimana saja
                 </h1>
                 <p className="hidden lg:inline sm:inline lg:text-sm sm:text-sm">
                   Bayangin kamu jadi atlet, untuk sehat mungkin bisa usaha
