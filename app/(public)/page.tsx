@@ -154,7 +154,7 @@ const Home = () => {
             </figure>
           </div>
         </div>
-        <SliderCard style="lg:hidden" />
+        {/* <SliderCard style="lg:hidden" /> */}
       </div>
       <Footer />
     </div>
