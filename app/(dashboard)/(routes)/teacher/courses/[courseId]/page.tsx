@@ -123,13 +123,6 @@ const CourseId = async ({ params }: { params: { courseId: string } }) => {
               </div>
               <ChaptersForm initialData={course} courseId={course.id} />
             </div>
-            <div>
-              <div className="flex items-center gap-x-2">
-                <IconBadge icon={FileQuestion} />
-                <h2 className="text-2xl">Kuis</h2>
-              </div>
-              <QuizsForm initialData={course} courseId={course.id} />
-            </div>
           </div>
           <div>
             <div className="flex items-center gap-x-2">
